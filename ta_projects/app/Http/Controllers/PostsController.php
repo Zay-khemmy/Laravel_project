@@ -63,7 +63,6 @@ class PostsController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
-        
         return view('post.show')->with('post', $post); 
     }
 
@@ -75,7 +74,8 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        return view('post.edit')->with('post', $post); 
     }
 
     /**
@@ -87,7 +87,17 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required|min:5',
+            'body' => 'required'
+        ]);
+        $post = Post::find($id);
+        $post->title = $request->input('title');
+        $post->body = $request->input('body');
+        $post->user_id = auth()->user()->id;
+        $post->save();
+
+        return redirect('/post')->with('success', 'Post Updated successfully');
     }
 
     /**
@@ -98,6 +108,9 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // $post = Post::find($id);
+        // $post->delete();
+
+        // return redirect('/post')->with('success', 'Post Deleted successfully');
     }
 }

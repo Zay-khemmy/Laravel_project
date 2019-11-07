@@ -7,12 +7,23 @@
         {{$post->body}}
     </div>
     <small>Posted on {{$post->created_at}}</small>
-    {!! Form::open(['action' => 'PostsController@store', 'method' => 'POST']) !!}
+    <hr>
+    <a href="/post/{{$post->id}}/edit" class="btn btn-info">Edit</a>
+    {{-- @if(session()->has('success'))
+        {{ session()->get('success') }}
+    @endif --}}
+    {{-- {!! Form::open(['action' => 'PostsController@destroy', 'method' => 'POST', 'class' => 'pull-right']) !!}
+        {{Form::hidden('_method', 'DELETE')}}
+        {{ Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+    {!! Form::close() !!} --}}
+    <hr>
+        <form action="/comment" method="POST">
+            {{ csrf_field() }}
         <div class="form-group">
-            {{ Form::label('body', 'Body') }}
-            {{ Form::textarea('body', '', ['class' => 'form-control', 'placeholder' => 'Enter Here']) }}
+        <input type="hidden" value="{{$post->id}}" name="post_id">
+            {{ Form::textarea('comment', '', ['class' => 'form-control', 'placeholder' => 'Enter Comment Here']) }}
         </div>
         <hr>
-        {{ Form::submit('Comment', ['class' => 'btn btn-primary'])}}
-    {!! Form::close() !!}
+        <button class="btn btn-primary">Comment</button>
+    </form>
 @endsection

@@ -3,15 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Comment;
+use DB;
 
 class CommentController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         $post = new Comment;
-        $post->body = $request->input('body');
-        $post->user_id = auth()->user()->id;
+        $post->comment = $request->input('comment');
+        $post->post_id = $request->input('post_id');
         $post->save();
-
-        return redirect('/post')->with('success', 'Post created successfully');
+        return back()->with('success', 'Post created successfully');
     }
 }

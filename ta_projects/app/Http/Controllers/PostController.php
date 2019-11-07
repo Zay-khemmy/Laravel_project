@@ -18,8 +18,8 @@ class PostController extends Controller
         // select data from Database
     public function retrieve(){
        return $select = Post::all();  // to fetch all data from database
-       return $select = Post::find(5); // to fetch a data with ID
-       return $title = Post::where('title', '=', 'Title')->first(); // fetch data by value
+    //    return $select = Post::find(5); // to fetch a data with ID
+    //    return $title = Post::where('title', '=', 'Title')->first(); // fetch data by value
     }
         // update database
     public function update(){

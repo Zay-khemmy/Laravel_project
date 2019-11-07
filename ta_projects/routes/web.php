@@ -31,10 +31,11 @@ Route::get('create','PostController@insert');
 Route::get('select','PostController@retrieve');
 Route::get('update','PostController@update');
 Route::get('delete','PostController@delete');
-
-Route::resource('post', 'PostsController');
-Auth::routes();
-
 Route::get('/dashboard', 'DashboardController@index');
 Route::get('/mypost', 'UserController@index');
-Route::get('/', 'CommentController@index');
+
+Auth::routes();
+Route::resource('post', 'PostsController');
+Route::post('/comment', 'CommentController@index');
+
+
