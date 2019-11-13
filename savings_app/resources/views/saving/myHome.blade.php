@@ -11,12 +11,12 @@
             <th>TARGET DATE</th>
         </tr>
         @if(count($plan) > 0)
-            @foreach($plan as $plan)
+            @foreach($plan as $plans)
         <tr>
-            <td>{{$plan->name}}</td>
-            <td>{{$plan->balance}}</td>
-            <td>{{$plan->target_amount}}</td>
-            <td>{{$plan->end_date}}</td>
+            <td>{{$plans->name}}</td>
+            <td>{{$plans->balance}}</td>
+            <td>{{$plans->target_amount}}</td>
+            <td>{{$plans->end_date}}</td>
         </tr>
         @endforeach
         @else 

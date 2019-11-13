@@ -127,7 +127,7 @@ class SavingsController extends Controller
         $fund->plan_id = $request->input('select_plan');
         $fund->save();
 
-        return view('saving.add_money_submit');
+        return view('saving.add_money_submit')->with('fund', $fund);
     }
 
     public function withdraw_create()
@@ -150,7 +150,7 @@ class SavingsController extends Controller
         $withdraw->user_id = auth()->user()->id;
         $withdraw->save();
 
-        return view('saving.withdraw_submit');
+        return view('saving.withdraw_submit')->with('withdraw', $withdraw);
     }
 
     public function myHome_create()
