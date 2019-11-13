@@ -19,9 +19,13 @@ Route::get('/dashboard', 'SavingsController@index');
 
 Route::get('plan', 'SavingsController@create');
 Route::get('add_money', 'SavingsController@create_fund');
-Route::get('Submit', 'SavingsController@create');
-Route::get('/Submit', 'SavingsController@store');
+Route::post('/Submit', 'SavingsController@store');
+Route::post('/add_money_submit', 'SavingsController@add_money_store');
+Route::get('/withdraw', 'SavingsController@withdraw_create');
+Route::get('/withdraw_submit', 'SavingsController@withdraw_money_store');
+Route::get('/myHome', 'SavingsController@myHome_create');
 Route::resource('saving', 'SavingsController');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

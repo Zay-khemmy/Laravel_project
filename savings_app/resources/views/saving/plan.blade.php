@@ -3,7 +3,7 @@
 @section('content')
     <h1 style="text-align:center;">Create a form</h1>
     <br>
-    <form action="/Submit" method="GET">
+    <form action="/Submit" method="POST">
             {{ csrf_field() }}
         <label><h5>NAME OF PLAN</h5></label>
             <input type="text" name="name_of_plan" placeholder="Enter Here" class="form-control">

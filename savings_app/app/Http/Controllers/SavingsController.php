@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\plans;
+use App\funds;
+use App\withdraws;
+use App\MyHome;
 use DB;
 
 class SavingsController extends Controller
@@ -15,7 +18,6 @@ class SavingsController extends Controller
      */
     public function index()
     {
-        // $plan = plans::all();
         return view('saving.index');
     }
 
@@ -106,23 +108,54 @@ class SavingsController extends Controller
 
     public function create_fund()
     {
-        return view('saving.add_money');
+        $plans = plans::where('user_id', auth()->user()->id)->get();
+        return view('saving.add_money', compact('plans'));
     }
     
     public function add_money_store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'target_amount' => 'required',
-            'brief description' => 'required'
+            // 'name' => 'required',
+            // 'target_amount' => 'required',
+            // 'brief description' => 'required'
         ]);
-        return '123';
+            // dd($request->all());
+            // dd($request->input('select_plan'));
+        $fund = new funds;
+        $fund->amount = $request->input('amount');
+        $fund->user_id = auth()->user()->id;
+        $fund->plan_id = $request->input('select_plan');
+        $fund->save();
 
-        // $fund = new funds;
-        // $fund->amount = $request->input('amount');
-        // $fund->select_plan = $request->input('select_plan');
-        // $fund->user_id = auth()->user()->id;
-        // $fund->plan_id = 
-        // $plan->target_amount = $request->input('target_amount');
+        return view('saving.add_money_submit');
+    }
+
+    public function withdraw_create()
+    {
+        $plans = plans::where('user_id', auth()->user()->id)->get();
+        return view('saving.withdraw', compact('plans'));
+    }
+
+    public function withdraw_money_store(Request $request)
+    {
+        $this->validate($request, [
+            // 'name' => 'required',
+            // 'target_amount' => 'required',
+            // 'brief description' => 'required'
+        ]);
+        $withdraw = new withdraws;
+        $withdraw->plan_id = $request->input('select_plan');
+        $withdraw->amount = $request->input('amount');
+        $withdraw->reason_for_withdraw = $request->input('reason_for_withdraw');
+        $withdraw->user_id = auth()->user()->id;
+        $withdraw->save();
+
+        return view('saving.withdraw_submit');
+    }
+
+    public function myHome_create()
+    {
+        $plan=plans::all();
+        return view('saving.myHome')->with('plan', $plan);
     }
 }

@@ -4,10 +4,10 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-            <a class="nav-item nav-link px-4" href="/my_plan">Home</a>
+            <a class="nav-item nav-link px-4" href="/myHome">Home</a>
             <a class="nav-item nav-link px-4" href="/plan">Plans</a>
             <a class="nav-item nav-link px-4" href="/add_money">Add Money</a>
-            <a class="nav-item nav-link px-4" href="/withdrawal">Withdrawal</a>
+            <a class="nav-item nav-link px-4" href="/withdraw">Withdrawal</a>
       </div>
     </div>
     <li class="nav-item dropdown">
