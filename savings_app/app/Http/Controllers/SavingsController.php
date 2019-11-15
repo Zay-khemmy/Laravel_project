@@ -106,21 +106,31 @@ class SavingsController extends Controller
         //
     }
 
-    public function create_fund()
+    public function create_fund(Request $request)
     {
+        $plan = plans::where('id', $request->select_plan)->first();
         $plans = plans::where('user_id', auth()->user()->id)->get();
         return view('saving.add_money', compact('plans'));
     }
     
     public function add_money_store(Request $request)
     {
+        // dd($request->all());
+        $plan = plans::where('id', $request->select_plan)->first();
+        $new_balance = $plan->balance + $request->amount;
+        $plan->update(['balance' => $new_balance]);
+        dd($plan);
+        // $amount = 9000;
+        // $new_balance = $amount+$balance;
+        // plans::where('id', $request->select_plan)->update(['balance', $new_balance]);
+
+        // dd($new_balance);
+
         $this->validate($request, [
             // 'name' => 'required',
             // 'target_amount' => 'required',
             // 'brief description' => 'required'
         ]);
-            // dd($request->all());
-            // dd($request->input('select_plan'));
         $fund = new funds;
         $fund->amount = $request->input('amount');
         $fund->user_id = auth()->user()->id;

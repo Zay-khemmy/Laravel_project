@@ -20,7 +20,7 @@ class CreatePlansTable extends Migration
             $table->float('target_amount');
             $table->timestamp('end_date');
             $table->integer('user_id');
-            $table->float('balance');
+            $table->float('balance')->default('0');
         });
     }
 
