@@ -17,9 +17,8 @@
         <label><h5>TARGET AMOUNT</h5></label>
             <input type="number" name="target_amount" placeholder="₦" class="form-control">
         <br>
-        <label><h5>BALANCE</h5></label>
-            <input type="number" name="balance" placeholder="₦" class="form-control">
-        <br>
+        {{-- <label><h5>BALANCE</h5></label>
+            <input type="number" name="balance" placeholder="₦" class="form-control"> --}}
             <input type="submit" name="Submit" class="btn btn-primary">
     </form>
 @endsection

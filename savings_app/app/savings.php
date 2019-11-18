@@ -9,4 +9,5 @@ class savings extends Model
     protected $fillable = [
         'name', 'target_amount', 'balance', 'brief_description'
     ];
+
 }

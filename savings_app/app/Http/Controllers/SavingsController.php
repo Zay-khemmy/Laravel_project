@@ -40,14 +40,13 @@ class SavingsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            // 'name' => 'required',
-            // 'end_date' => 'required',
+            'name_of_plan' => 'required',
+            'end_date' => 'required',
             'target_amount' => 'required',
-            'balance' => 'required',
-            // 'brief description' => 'required'
+            'brief_description' => 'required'
         ]);
-        // dd($request->all());
-        // dd($request->input('name'));
+        
+
         // Create a post
         $plan = new plans;
         $plan->name = $request->input('name_of_plan');
@@ -106,38 +105,34 @@ class SavingsController extends Controller
         //
     }
 
-    public function create_fund(Request $request)
+    public function create_fund()
     {
-        $plan = plans::where('id', $request->select_plan)->first();
         $plans = plans::where('user_id', auth()->user()->id)->get();
         return view('saving.add_money', compact('plans'));
     }
     
     public function add_money_store(Request $request)
     {
-        // dd($request->all());
         $plan = plans::where('id', $request->select_plan)->first();
         $new_balance = $plan->balance + $request->amount;
         $plan->update(['balance' => $new_balance]);
-        dd($plan);
-        // $amount = 9000;
-        // $new_balance = $amount+$balance;
-        // plans::where('id', $request->select_plan)->update(['balance', $new_balance]);
-
-        // dd($new_balance);
-
+    
         $this->validate($request, [
-            // 'name' => 'required',
-            // 'target_amount' => 'required',
-            // 'brief description' => 'required'
+            'amount' => 'required',
+            'select_plan' => 'required',
         ]);
-        $fund = new funds;
-        $fund->amount = $request->input('amount');
-        $fund->user_id = auth()->user()->id;
-        $fund->plan_id = $request->input('select_plan');
-        $fund->save();
 
-        return view('saving.add_money_submit')->with('fund', $fund);
+        if($plan->balance > $plan->target_amount){
+            return view('saving.error'); 
+        }
+            $fund = new funds;
+            $fund->amount = $request->input('amount');
+            $fund->user_id = auth()->user()->id;
+            $fund->plan_id = $request->input('select_plan');
+            $fund->save();
+
+            return view('saving.add_money_submit')->with('fund', $fund);
+        
     }
 
     public function withdraw_create()
@@ -148,19 +143,28 @@ class SavingsController extends Controller
 
     public function withdraw_money_store(Request $request)
     {
+        $plan = plans::where('id', $request->select_plan)->first();
+        $new_balance = $plan->balance - $request->amount;
+        $plan->update(['balance' => $new_balance]);
+      
         $this->validate($request, [
-            // 'name' => 'required',
-            // 'target_amount' => 'required',
-            // 'brief description' => 'required'
+            'select_plan' => 'required',
+            'amount' => 'required',
+            'reason_for_withdraw' => 'required'
         ]);
-        $withdraw = new withdraws;
-        $withdraw->plan_id = $request->input('select_plan');
-        $withdraw->amount = $request->input('amount');
-        $withdraw->reason_for_withdraw = $request->input('reason_for_withdraw');
-        $withdraw->user_id = auth()->user()->id;
-        $withdraw->save();
 
-        return view('saving.withdraw_submit')->with('withdraw', $withdraw);
+        if($plan->balance > $plan->amount){
+            return view('saving.error_two'); 
+        }else{
+            $withdraw = new withdraws;
+            $withdraw->plan_id = $request->input('select_plan');
+            $withdraw->amount = $request->input('amount');
+            $withdraw->reason_for_withdraw = $request->input('reason_for_withdraw');
+            $withdraw->user_id = auth()->user()->id;
+            $withdraw->save();
+
+            return view('saving.withdraw_submit')->with('withdraw', $withdraw);
+        }
     }
 
     public function myHome_create()
@@ -168,4 +172,9 @@ class SavingsController extends Controller
         $plan=plans::all();
         return view('saving.myHome')->with('plan', $plan);
     }
+
+    // public function error()
+    // {
+       
+    // }
 }
