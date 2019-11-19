@@ -150,11 +150,10 @@ class SavingsController extends Controller
         
         $plan = plans::where('id', $request->select_plan)->first();
         $new_balance = $plan->balance - $request->amount;
-            if($request->amount > $new_balance){
+            if($request->amount > $plan->balance){
                 return view('saving.error_two'); 
             }else{
-               
-                $plan->update(['balance' => $new_balance]);
+               $plan->update(['balance' => $new_balance]);
                 $withdraw = new withdraws;
                 $withdraw->plan_id = $request->input('select_plan');
                 $withdraw->amount = $request->input('amount');
