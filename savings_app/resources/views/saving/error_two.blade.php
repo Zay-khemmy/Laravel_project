@@ -4,6 +4,6 @@
 <div class="container">
     <p>Insufficient Funds</p>
 <br>
-    <a href="/home" class="btn btn-primary">Go Back</a>
+    <a href="/withdraw" class="btn btn-primary">Go Back</a>
 </div>
 @endsection
